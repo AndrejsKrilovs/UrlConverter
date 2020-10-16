@@ -51,7 +51,8 @@ public class UrlController {
     public void redirectPage(HttpServletResponse response, @PathVariable String key) throws IOException {
         UrlDTO entity = urlList.stream()
                 .filter(item -> item.getShortUrl().contains(key))
-                .findFirst().orElse(new UrlDTO());
+                .findFirst()
+                .orElse(new UrlDTO());
         response.sendRedirect(entity.getOriginalUrl());
     }
 }
