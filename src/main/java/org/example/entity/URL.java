@@ -1,18 +1,16 @@
 package org.example.entity;
 
-import java.time.LocalDateTime;
-
-public class URL {
-    private LocalDateTime time;
+public class URL implements Comparable<URL>{
+    private String time;
     private String originalUrl;
     private String shortUrl;
-    private String generatedKey;
+    private String value;
 
-    public LocalDateTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -32,11 +30,16 @@ public class URL {
         this.shortUrl = shortUrl;
     }
 
-    public String getGeneratedKey() {
-        return generatedKey;
+    public String getValue() {
+        return value;
     }
 
-    public void setGeneratedKey(String generatedKey) {
-        this.generatedKey = generatedKey;
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public int compareTo(URL o) {
+        return this.getTime().compareTo(o.getTime());
     }
 }

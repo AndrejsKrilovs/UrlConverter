@@ -9,21 +9,18 @@
 </head>
 <body>
 <div class="container">
-    <div class="card" style="margin-top: 5%">
-        <div class="card-body">
-            <form method="post">
-                <div class="form-group">
-                    <label for="originalUrl">Full URL:</label>
-                    <input type="text" id="originalUrl" class="form-control" name="originalUrl" value="">
-                </div>
-                <div class="form-group">
-                    <label for="shortUrl">Generated URL:</label>
-                    <input type="text" id="shortUrl" class="form-control" name="shortUrl" value="{{shortUrl}}" disabled>
-                </div>
-                <input type="submit" value="Convert to short URL" class="btn btn-primary">
-            </form>
+    <form method="post">
+        <div class="row" style="margin-top: 5%">
+            <div class="col-sm-8">
+                <label for="originalUrl">Full URL</label>
+                <input type="text" id="originalUrl" class="form-control" name="originalUrl" value=""
+                       placeholder="https://domain.name/query">
+            </div>
+            <div class="col-sm-4" style="margin-top: 2em">
+                <input type="submit" value="Convert" class="btn btn-primary">
+            </div>
         </div>
-    </div>
+    </form>
 
     <table class="table" style="margin-top: 5%">
         <thead>
@@ -38,7 +35,7 @@
             <tr>
                 <td>{{time}}</td>
                 <td>{{originalUrl}}</td>
-                <td><a href="{{generatedKey}}">{{shortUrl}}</a></td>
+                <td><a href="{{shortUrl}}">{{value}}</a></td>
             </tr>
         {{/urlList}}
         </tbody>
