@@ -43,9 +43,9 @@ public class UrlController {
                 .ifPresent(item -> {
                     urlList.add(item);
                     urlList.sort(Collections.reverseOrder());
-                    model.put(URL_LIST_KEY, urlList);
                 });
 
+        model.put(URL_LIST_KEY, urlList);
         return "main";
     }
 
