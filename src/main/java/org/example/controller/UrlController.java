@@ -3,6 +3,8 @@ package org.example.controller;
 import org.example.dto.UrlDTO;
 import org.example.mapper.UrlMapper;
 import org.example.service.UrlService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import java.util.Map;
 @Controller
 public class UrlController {
 
+    private static final Logger ERROR_LOG = LoggerFactory.getLogger(UrlController.class);
     private static final String URL_LIST_KEY = "urlList";
     private final List<UrlDTO> urlList;
     private final UrlService service;
@@ -48,11 +51,16 @@ public class UrlController {
 
     @ResponseBody
     @GetMapping("{key}")
-    public void redirectPage(HttpServletResponse response, @PathVariable String key) throws IOException {
-        UrlDTO entity = urlList.stream()
+    public void redirectPage(HttpServletResponse response, @PathVariable String key) {
+        urlList.stream()
                 .filter(item -> item.getShortUrl().contains(key))
                 .findFirst()
-                .orElse(new UrlDTO());
-        response.sendRedirect(entity.getOriginalUrl());
+                .ifPresent(item -> {
+                    try {
+                        response.sendRedirect(item.getOriginalUrl());
+                    } catch (IOException e) {
+                        ERROR_LOG.error("Redirection error:", e);
+                    }
+                });
     }
 }
