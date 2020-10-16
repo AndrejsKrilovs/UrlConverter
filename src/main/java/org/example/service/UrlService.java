@@ -15,7 +15,6 @@ public class UrlService {
     private static final String URL_POSSIBLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final String CORRECT_URL_PATTERN = "https://[a-z]{1,}.[a-z]{2,3}.*{0,}";
     private static final String SHORTEN_URL_FORMAT = "http://localhost:8080/%s";
-    private static final String DATE_TIME_FORMAT = "dd.MM.yyyy kk:mm:ss";
 
     public Optional<URL> generateUrl(String originalUrl) {
         Pattern pattern = Pattern.compile(CORRECT_URL_PATTERN);
@@ -43,7 +42,7 @@ public class UrlService {
             url.setShortUrl(String.format(SHORTEN_URL_FORMAT, key.toString()));
             url.setOriginalUrl(originalUrl);
             url.setValue(newLink.toString());
-            url.setTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
+            url.setTime(LocalDateTime.now());
 
             return Optional.of(url);
         } else {

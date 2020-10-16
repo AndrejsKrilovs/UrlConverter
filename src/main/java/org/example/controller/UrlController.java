@@ -1,6 +1,7 @@
 package org.example.controller;
 
-import org.example.entity.URL;
+import org.example.dto.UrlDTO;
+import org.example.mapper.UrlMapper;
 import org.example.service.UrlService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +17,14 @@ import java.util.Map;
 public class UrlController {
 
     private static final String URL_LIST_KEY = "urlList";
-    private final List<URL> urlList;
+    private final List<UrlDTO> urlList;
     private final UrlService service;
+    private final UrlMapper mapper;
 
-    public UrlController(UrlService service) {
+    public UrlController(UrlService service, UrlMapper mapper) {
         this.urlList = new ArrayList<>();
         this.service = service;
+        this.mapper = mapper;
     }
 
     @GetMapping
@@ -32,20 +35,23 @@ public class UrlController {
 
     @PostMapping
     public String sendValue(Map<String, Object> model, @RequestParam String originalUrl) {
-        service.generateUrl(originalUrl).ifPresent(item -> {
-            urlList.add(item);
-            urlList.sort(Collections.reverseOrder());
-            model.put(URL_LIST_KEY, urlList);
-        });
+        service.generateUrl(originalUrl)
+                .map(mapper::toDto)
+                .ifPresent(item -> {
+                    urlList.add(item);
+                    urlList.sort(Collections.reverseOrder());
+                    model.put(URL_LIST_KEY, urlList);
+                });
+
         return "main";
     }
 
     @ResponseBody
     @GetMapping("{key}")
     public void redirectPage(HttpServletResponse response, @PathVariable String key) throws IOException {
-        URL entity = urlList.stream()
+        UrlDTO entity = urlList.stream()
                 .filter(item -> item.getShortUrl().contains(key))
-                .findFirst().orElse(new URL());
+                .findFirst().orElse(new UrlDTO());
         response.sendRedirect(entity.getOriginalUrl());
     }
 }

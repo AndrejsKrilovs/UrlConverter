@@ -1,18 +1,16 @@
-package org.example.entity;
+package org.example.dto;
 
-import java.time.LocalDateTime;
-
-public class URL {
-    private LocalDateTime time;
+public class UrlDTO implements Comparable<UrlDTO>{
+    private String time;
     private String originalUrl;
     private String shortUrl;
     private String value;
 
-    public LocalDateTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -38,5 +36,10 @@ public class URL {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public int compareTo(UrlDTO o) {
+        return this.getTime().compareTo(o.getTime());
     }
 }
