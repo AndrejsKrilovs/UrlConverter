@@ -51,6 +51,11 @@
                 <td><a href="{{shortUrl}}">{{value}}</a></td>
             </tr>
         {{/urlList}}
+        {{^urlList}}
+            <tr>
+                <td colspan="3">No data</td>
+            </tr>
+        {{/urlList}}
         </tbody>
     </table>
 </div>
