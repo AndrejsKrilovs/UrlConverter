@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class UrlController {
@@ -37,7 +35,7 @@ public class UrlController {
     }
 
     @PostMapping
-    public String sendValue(Map<String, Object> model, @RequestParam String originalUrl) {
+    public String convert(Map<String, Object> model, @RequestParam String originalUrl) {
         service.generateUrl(originalUrl)
                 .map(mapper::toDto)
                 .ifPresent(item -> {
@@ -62,5 +60,24 @@ public class UrlController {
                         ERROR_LOG.error("Redirection error:", e);
                     }
                 });
+    }
+
+    @GetMapping("filter")
+    public String filterData(Map<String, Object> model, @RequestParam(required = false, defaultValue = "") String filter) {
+        if(filter == null || filter.isEmpty()) {
+            urlList.sort(Collections.reverseOrder());
+            model.put(URL_LIST_KEY, urlList);
+        } else {
+            List<UrlDTO> filteredList = urlList.stream()
+                    .filter(item ->
+                            item.getTime().contains(filter) ||
+                                    item.getOriginalUrl().contains(filter) ||
+                                    item.getValue().contains(filter)
+                    ).sorted(Collections.reverseOrder())
+                    .collect(Collectors.toList());
+
+            model.put(URL_LIST_KEY, filteredList);
+        }
+        return "main";
     }
 }
