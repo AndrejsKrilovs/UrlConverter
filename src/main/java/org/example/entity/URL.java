@@ -1,19 +1,35 @@
 package org.example.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+@Entity
 public class URL {
-    private LocalDateTime time;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDateTime createdTime;
     private String originalUrl;
     private String shortUrl;
-    private String value;
+    private String urlValue;
 
-    public LocalDateTime getTime() {
-        return time;
+    public Long getId() {
+        return id;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
     }
 
     public String getOriginalUrl() {
@@ -32,11 +48,11 @@ public class URL {
         this.shortUrl = shortUrl;
     }
 
-    public String getValue() {
-        return value;
+    public String getUrlValue() {
+        return urlValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setUrlValue(String urlValue) {
+        this.urlValue = urlValue;
     }
 }
