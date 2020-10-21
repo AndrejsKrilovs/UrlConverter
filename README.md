@@ -1,1 +1,2 @@
-# UrlConverter
+# UrlConverter application
+## Project structure:

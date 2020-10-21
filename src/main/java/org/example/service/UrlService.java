@@ -13,6 +13,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Service class which provides main logic of the application.
+ */
 @Service
 public class UrlService {
 
@@ -27,12 +30,23 @@ public class UrlService {
         this.repository = repository;
     }
 
+    /**
+     * Method that return sorted Available URL collection.
+     * @param page - size, how many elements will be shown. 1 page = 50 elements
+     * @return list of sorted URLs
+     */
     public List<URL> findAllUrls(Integer page) {
         return repository.findAll(PageRequest.of(page, ITEMS_PER_PAGE, Sort.by(SORT_COLUMN).descending()))
                 .stream()
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Method that return sorted Filtered URL collection.
+     * @param filter - criteria to find
+     * @param page - size, how many elements will be shown. 1 page = 50 elements
+     * @return list of filtered and sorted URLs
+     */
     public List<URL> filterUrlList(String filter, Integer page) {
         if(filter == null || filter.isBlank()) {
             return findAllUrls(0);
@@ -44,10 +58,20 @@ public class UrlService {
         }
     }
 
+    /**
+     * Method that finds full URL by key.
+     * @param key - key which contains in list
+     * @return original URL which contains generated key
+     */
     public Optional<URL> getUrlByKey(String key) {
         return Optional.of(repository.findByShortUrlContainingIgnoreCase(key));
     }
 
+    /**
+     * Method that generates shor URL from original
+     * @param originalUrl - original valid URL which are pass from outside
+     * @return generated short URL or nothing (if incoming URL is not valid)
+     */
     public URL generateUrl(String originalUrl) {
         Pattern pattern = Pattern.compile(CORRECT_URL_PATTERN);
         Matcher matcher = pattern.matcher(originalUrl);
