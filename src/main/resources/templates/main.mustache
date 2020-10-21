@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>URL shorten page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-          crossorigin="anonymous">
+          crossorigin="anonymous" />
 </head>
 <body>
 <div class="container">
@@ -14,10 +14,10 @@
             <div class="col-sm-8">
                 <label for="originalUrl">Full URL</label>
                 <input type="text" id="originalUrl" class="form-control" name="originalUrl" value=""
-                       placeholder="https://domain.name/query">
+                       placeholder="https://domain.name/query" />
             </div>
             <div class="col-sm-4" style="margin-top: 2em">
-                <input type="submit" value="Convert" class="btn btn-primary">
+                <input type="submit" value="Convert" class="btn btn-primary" />
             </div>
         </div>
     </form>
@@ -27,10 +27,10 @@
                 <div class="col-sm-8">
                     <label for="filter">Filter data</label>
                     <input type="text" id="filter" class="form-control" name="param" value=""
-                           placeholder="Value to find">
+                           placeholder="Value to find" />
                 </div>
                 <div class="col-sm-4" style="margin-top: 2em">
-                    <input type="submit" value="Filter data" class="btn btn-primary">
+                    <input type="submit" value="Filter data" class="btn btn-primary" />
                 </div>
             </div>
         </form>
@@ -43,7 +43,7 @@
             <th scope="col">Shorten URL</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="urlList">
         {{#urlList}}
             <tr>
                 <td>{{createdTime}}</td>
