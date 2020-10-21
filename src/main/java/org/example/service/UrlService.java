@@ -48,7 +48,7 @@ public class UrlService {
         return Optional.of(repository.findByShortUrlContainingIgnoreCase(key));
     }
 
-    public void generateUrl(String originalUrl) {
+    public URL generateUrl(String originalUrl) {
         Pattern pattern = Pattern.compile(CORRECT_URL_PATTERN);
         Matcher matcher = pattern.matcher(originalUrl);
 
@@ -76,6 +76,10 @@ public class UrlService {
             url.setUrlValue(newLink.toString());
             url.setCreatedTime(LocalDateTime.now());
             repository.save(url);
+
+            return url;
+        } else {
+            return new URL();
         }
     }
 }
