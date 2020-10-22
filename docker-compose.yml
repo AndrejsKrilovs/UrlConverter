@@ -7,26 +7,16 @@ services:
     restart: always
     ports:
       - 1527:1527
-    networks:
-      - akrilov-internal-network
 
-  Application:
+  app:
     image: Application.jar
-    container_name: Application
+    container_name: application
     environment:
       JAVA_OPTIONS: '-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1089 -Xms64m -Xmx512m '
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    restart: always
     ports:
       - 8080:8080
     depends_on:
       - db
     links:
       - db
-    networks:
-      - akrilov-internal-network
-
-networks:
-  akrilov-internal-network:
-    driver: bridge
