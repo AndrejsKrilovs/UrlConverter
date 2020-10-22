@@ -4,15 +4,10 @@ import org.example.entity.URL;
 import org.example.repository.UrlRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,15 +17,11 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
 @TestPropertySource("/application-test.properties")
 public class UrlServiceTest {
-    @Autowired
-    private UrlService service;
 
-    @MockBean
-    private UrlRepository repository;
+    private final UrlRepository repository = mock(UrlRepository.class);
+    private final UrlService service = new UrlService(repository);
 
     @Before
     public void setUp() throws Exception {

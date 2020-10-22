@@ -5,6 +5,7 @@ import org.example.repository.UrlRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,7 +49,7 @@ public class UrlService {
      * @return list of filtered and sorted URLs
      */
     public List<URL> filterUrlList(String filter, Integer page) {
-        if(filter == null || filter.isBlank()) {
+        if(StringUtils.isEmpty(filter)) {
             return findAllUrls(0);
         } else {
             return repository.filterUrls(
